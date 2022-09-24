@@ -261,7 +261,7 @@ impl<'a> Parser<'a> {
             p.read_number(10, 2, 33).map(|n| n as u8)
         } {
 	    Some(d) => d,
-	    None(d) => 32,
+	    None => 32,
 	};
 
         self.read_seq_3(ip_addr, slash, prefix_len).map(|t| {
@@ -278,7 +278,7 @@ impl<'a> Parser<'a> {
             p.read_number(10, 3, 129).map(|n| n as u8)
         } {
 	    Some(d) => d,
-	    None(d) => 128,
+	    None => 128,
 	};
 
         self.read_seq_3(ip_addr, slash, prefix_len).map(|t| {
