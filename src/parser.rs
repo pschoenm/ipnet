@@ -259,7 +259,7 @@ impl<'a> Parser<'a> {
         let slash = |p: &mut Parser| p.read_given_char('/');
         let prefix_len = match {|p: &mut Parser| {
             p.read_number(10, 2, 33).map(|n| n as u8)
-        }} {
+        };} {
 	    Some(d) => d,
 	    None => 32,
 	};
@@ -276,7 +276,7 @@ impl<'a> Parser<'a> {
         let slash = |p: &mut Parser| p.read_given_char('/');
         let prefix_len = match {|p: &mut Parser| {
             p.read_number(10, 3, 129).map(|n| n as u8)
-        }} {
+        };} {
 	    Some(d) => d,
 	    None => 128,
 	};
