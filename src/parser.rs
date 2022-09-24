@@ -257,9 +257,9 @@ impl<'a> Parser<'a> {
     fn read_ipv4_net(&mut self) -> Option<Ipv4Net> {
         let ip_addr = |p: &mut Parser| p.read_ipv4_addr();
         let slash = |p: &mut Parser| p.read_given_char('/');
-        let prefix_len = match |p: &mut Parser| {
+        let prefix_len = match {|p: &mut Parser| {
             p.read_number(10, 2, 33).map(|n| n as u8)
-        } {
+        }} {
 	    Some(d) => d,
 	    None => 32,
 	};
@@ -274,9 +274,9 @@ impl<'a> Parser<'a> {
     fn read_ipv6_net(&mut self) -> Option<Ipv6Net> {
         let ip_addr = |p: &mut Parser| p.read_ipv6_addr();
         let slash = |p: &mut Parser| p.read_given_char('/');
-        let prefix_len = match |p: &mut Parser| {
+        let prefix_len = match {|p: &mut Parser| {
             p.read_number(10, 3, 129).map(|n| n as u8)
-        } {
+        }} {
 	    Some(d) => d,
 	    None => 128,
 	};
