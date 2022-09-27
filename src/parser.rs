@@ -256,13 +256,18 @@ impl<'a> Parser<'a> {
     // Read IPv4 network
     fn read_ipv4_net(&mut self) -> Option<Ipv4Net> {
         let ip_addr = |p: &mut Parser| p.read_ipv4_addr();
-        let slash = |p: &mut Parser| p.read_given_char('/');
-        let prefix_len = match {|p: &mut Parser| {
-            p.read_number(10, 2, 33).map(|n| n as u8)
-        };} {
-	    Some(d) => d,
-	    None => 32,
+        let slash = |p: &mut Parser| {
+	    match p.read_given_char('/') {
+		Some(x) => Some(x),
+		None => Some('/'),
+	    }
 	};
+        let prefix_len = |p: &mut Parser| {
+            match p.read_number(10, 2, 33) {
+		Some(x) => Some(x),
+		None => Some(32),
+	    }.map(|n| n as u8)
+        };
 
         self.read_seq_3(ip_addr, slash, prefix_len).map(|t| {
             let (ip, _, prefix_len): (Ipv4Addr, char, u8) = t;
@@ -273,13 +278,18 @@ impl<'a> Parser<'a> {
     // Read Ipv6 network
     fn read_ipv6_net(&mut self) -> Option<Ipv6Net> {
         let ip_addr = |p: &mut Parser| p.read_ipv6_addr();
-        let slash = |p: &mut Parser| p.read_given_char('/');
-        let prefix_len = match {|p: &mut Parser| {
-            p.read_number(10, 3, 129).map(|n| n as u8)
-        };} {
-	    Some(d) => d,
-	    None => 128,
+        let slash = |p: &mut Parser| {
+	    match p.read_given_char('/') {
+		Some(x) => Some(x),
+		None => Some('/'),
+	    }
 	};
+        let prefix_len = |p: &mut Parser| {
+            match p.read_number(10, 3, 129) {
+		Some(x) => Some(x),
+		None => Some(128),
+	    }.map(|n| n as u8)
+        };
 
         self.read_seq_3(ip_addr, slash, prefix_len).map(|t| {
             let (ip, _, prefix_len): (Ipv6Addr, char, u8) = t;
